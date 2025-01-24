@@ -1,4 +1,5 @@
 `include "Defines.vh"
+`include "multiplier_8x8.v"
 
 module Fixed_Point_Unit 
 #(
@@ -243,11 +244,15 @@ module Multiplier
     input wire [7 : 0] operand_1,
     input wire [7 : 0] operand_2,
 
-    output reg [15 : 0] product
+    output reg[15 : 0] product
 );
 
-    always @(*)
-    begin
-        product <= operand_1 * operand_2;
-    end
+    wire [15 : 0] product_wire;
+    mul8x8 mul8(operand_1, operand_2, product_wire);
+    always @(*) begin
+        product <= product_wire;
+    end 
+
+  
+
 endmodule
